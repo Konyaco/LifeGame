@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.konyaco.lifegame"
-version = "1.0.1"
+version = "1.1.0"
 
 repositories {
     google()
@@ -35,17 +35,17 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Exe, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm)
             packageName = "Life Game"
-            vendor = "Konyaco"
+            vendor = "KonYaco"
             windows {
                 perUserInstall = true
                 shortcut = true
                 upgradeUuid = "82d85259-28e3-4d1e-bf53-f55696ef9917"
                 menu = true
-                menuGroup = "Konyaco"
+                menuGroup = "KonYaco"
             }
             linux {
                 shortcut = true
-                menuGroup = "Konyaco"
+                menuGroup = "KonYaco"
                 packageName = "me.konyaco.lifegame"
             }
         }
