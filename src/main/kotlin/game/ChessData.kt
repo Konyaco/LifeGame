@@ -1,8 +1,6 @@
 package game
 
-import java.lang.Integer.min
-
-internal class ChessImpl(
+internal class ChessData(
     height: Int = 100,
     width: Int = 100
 ) : Chess {

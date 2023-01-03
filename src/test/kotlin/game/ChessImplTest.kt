@@ -6,7 +6,7 @@ import kotlin.test.Test
 internal class ChessImplTest {
     @Test
     fun test() {
-        val chess = ChessImpl()
+        val chess = ChessData()
         repeat(10000) {
             val x = Random.nextInt(0, 100)
             val y = Random.nextInt(0, 100)

@@ -1,17 +1,15 @@
+import androidx.compose.runtime.mutableStateOf
 import game.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import kotlin.math.min
 
 class Component {
-    private val chessController = ChessController()
-    private val timeController = TimeController(5, chessController, onUpdate = { update() })
+    private val chessController = ChessController().apply {
+        putGosperGliderGun()
+    }
+    private val timeController = TimeController(20, chessController, onUpdate = { update() })
 
-    val chessFlow = MutableStateFlow(ChessData(chessController.getChess(), System.currentTimeMillis()))
+    val chessData = mutableStateOf(ChessData(chessController.getChess(), System.currentTimeMillis()))
 
-    val state = MutableStateFlow<State>(State.Stopped)
+    val state = mutableStateOf<State>(State.Stopped)
 
     sealed class State {
         object Running : State()
@@ -22,7 +20,7 @@ class Component {
     data class ChessData(val chess: Chess, val time: Long)
 
     private fun update() {
-        chessFlow.tryEmit(ChessData(chessController.getChess(), System.currentTimeMillis()))
+        chessData.value = ChessData(chessController.getChess(), System.currentTimeMillis())
     }
 
     fun put(x: Int, y: Int) {

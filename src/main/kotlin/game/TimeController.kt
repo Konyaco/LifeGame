@@ -40,7 +40,6 @@ class TimeController(
             task?.cancelAndJoin()
             task = newTask()
         }
-        println("Update")
     }
 
     fun resume() {

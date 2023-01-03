@@ -1,15 +1,14 @@
 package game
 
 class ChessController {
-    @Volatile
-    private var chess: ChessImpl = ChessImpl()
+    private var chess: ChessData = ChessData()
 
     fun getChess(): Chess {
         return chess
     }
 
     fun newChess() {
-        chess = ChessImpl(chess.height, chess.width)
+        chess = ChessData(chess.height, chess.width)
     }
 
     fun nextRound() {
@@ -30,11 +29,11 @@ class ChessController {
         chess = newChess
     }
 
-    fun get(x: Int, y: Int): Chess.State {
+    operator fun get(x: Int, y: Int): Chess.State {
         return chess[x, y]
     }
 
-    fun set(x: Int, y: Int, state: Chess.State) {
+    operator fun set(x: Int, y: Int, state: Chess.State) {
         chess[x, y] = state
     }
 
@@ -67,8 +66,8 @@ class ChessController {
         return liveNeighbors
     }
 
-    private fun ChessImpl.copy(): ChessImpl {
-        val newChess = ChessImpl(height, width)
+    private fun ChessData.copy(): ChessData {
+        val newChess = ChessData(height, width)
         this.forEachCell { x, y, cell ->
             newChess[x, y] = cell
         }
@@ -76,10 +75,39 @@ class ChessController {
     }
 
     fun changeSize(width: Int, height: Int) {
-        val newChess = ChessImpl(height, width)
+        val newChess = ChessData(height, width)
         chess.forEachCell { x, y, cell ->
             newChess[x, y] = cell
         }
         chess = newChess
+    }
+}
+
+val gosperGliderGun = """
+000000000000000000000000000000000000
+000000000000000000000000100000000000
+000000000000000000000010100000000000
+000000000000110000001100000000000011
+000000000001000100001100000000000011
+110000000010000010001100000000000000
+110000000010001011000010100000000000
+000000000010000010000000100000000000
+000000000001000100000000000000000000
+000000000000110000000000000000000000
+"""
+
+fun ChessController.putGosperGliderGun() {
+    val initX = 20
+    var x = initX
+    var y = 20
+    gosperGliderGun.forEach {
+        when (it) {
+            '0' -> this[x++, y] = Chess.State.DEAD
+            '1' -> this[x++, y] = Chess.State.LIVING
+            '\n' -> {
+                y++
+                x = initX
+            }
+        }
     }
 }
